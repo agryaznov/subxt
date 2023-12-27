@@ -262,7 +262,7 @@ mod subxt_compat {
 
     use subxt::config::Config;
     use subxt::tx::Signer as SignerT;
-    use subxt::utils::{AccountId32, MultiAddress, MultiSignature};
+    use subxt::utils::{AccountId20, AccountId32, MultiAddress, MultiSignature};
 
     impl From<Signature> for MultiSignature {
         fn from(value: Signature) -> Self {
@@ -281,6 +281,17 @@ mod subxt_compat {
             value.to_address()
         }
     }
+    impl From<PublicKey> for AccountId20 {
+        fn from(value: PublicKey) -> Self {
+            value.to_account20_id()
+        }
+    }
+
+    impl<T> From<PublicKey> for MultiAddress<AccountId20, T> {
+        fn from(value: PublicKey) -> Self {
+            value.to_address20()
+        }
+    }
 
     impl PublicKey {
         /// A shortcut to obtain an [`AccountId32`] from a [`PublicKey`].
@@ -294,6 +305,21 @@ mod subxt_compat {
         /// ambiguous type resolution issues.
         pub fn to_address<T>(self) -> MultiAddress<AccountId32, T> {
             MultiAddress::Id(self.to_account_id())
+        }
+        /// Account 20 bytes
+        pub fn to_account20_id(self) -> AccountId20 {
+            let decompressed = libsecp256k1::PublicKey::parse_compressed(&self.0)
+                .expect("Wrong compressed public key provided")
+                .serialize();
+            let mut m = [0u8; 64];
+            m.copy_from_slice(&decompressed[1..65]);
+            let mut b = [0u8; 20];
+            b.copy_from_slice(&sp_core_hashing::keccak_256(&m)[12..32]);
+            b.into()
+        }
+        /// doc TODO
+        pub fn to_address20<T>(self) -> MultiAddress<AccountId20, T> {
+            MultiAddress::Id(self.to_account20_id())
         }
     }
 

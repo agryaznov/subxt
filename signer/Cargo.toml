@@ -47,6 +47,8 @@ bip39 = { workspace = true }
 schnorrkel = { workspace = true, optional = true }
 secp256k1 = { workspace = true, features = ["recovery", "global-context"], optional = true }
 secrecy = { workspace = true }
+# TODO replace its use with the one above
+libsecp256k1 = { version = "0.7.1", default-features = false }
 
 # We only pull this in to enable the JS flag for schnorrkel to use.
 getrandom = { workspace = true, optional = true }

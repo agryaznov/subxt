@@ -154,6 +154,101 @@ impl std::str::FromStr for AccountId32 {
     }
 }
 
+/// 20-byte identifier to use with Polkamask
+#[derive(
+    Clone,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Encode,
+    Decode,
+    Debug,
+    scale_encode::EncodeAsType,
+    scale_decode::DecodeAsType,
+)]
+pub struct AccountId20(pub [u8; 20]);
+use sp_core_hashing::keccak_256;
+use crate::utils::H160;
+
+impl From<H160> for AccountId20 {
+    fn from(h160: H160) -> Self {
+        Self(h160.0)
+    }
+}
+
+impl AsRef<[u8]> for AccountId20 {
+    fn as_ref(&self) -> &[u8] {
+        &self.0[..]
+    }
+}
+
+impl AsRef<[u8; 20]> for AccountId20 {
+    fn as_ref(&self) -> &[u8; 20] {
+        &self.0
+    }
+}
+
+impl From<[u8; 20]> for AccountId20 {
+    fn from(x: [u8; 20]) -> Self {
+        AccountId20(x)
+    }
+}
+
+// impl Serialize for AccountId20 {
+//     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+//     where
+//         S: serde::Serializer,
+//     {
+//         serializer.serialize_str(&self.to_ss58check())
+//     }
+// }
+
+// impl<'de> Deserialize<'de> for AccountId20 {
+//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+//     where
+//         D: serde::Deserializer<'de>,
+//     {
+//         AccountId20::from_ss58check(&String::deserialize(deserializer)?)
+//             .map_err(|e| serde::de::Error::custom(format!("{e:?}")))
+//     }
+// }
+
+impl std::fmt::Display for AccountId20 {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let address = hex::encode(self.0).trim_start_matches("0x").to_lowercase();
+        let address_hash = hex::encode(keccak_256(address.as_bytes()));
+
+        let checksum: String =
+            address
+                .char_indices()
+                .fold(String::from("0x"), |mut acc, (index, address_char)| {
+                    let n = u16::from_str_radix(&address_hash[index..index + 1], 16)
+                        .expect("Keccak256 hashed; qed");
+
+                    if n > 7 {
+                        // make char uppercase if ith character is 9..f
+                        acc.push_str(&address_char.to_uppercase().to_string())
+                    } else {
+                        // already lowercased
+                        acc.push(address_char)
+                    }
+
+                    acc
+                });
+        write!(f, "{checksum}")
+    }
+}
+
+impl std::str::FromStr for AccountId20 {
+    type Err = &'static str;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        H160::from_str(s)
+            .map(Into::into)
+            .map_err(|_| "invalid hex address.")
+    }
+}
+
 // Improve compat with the substrate version if we're using those crates:
 #[cfg(feature = "substrate-compat")]
 mod substrate_impls {
@@ -176,6 +271,18 @@ mod substrate_impls {
             acc.into()
         }
     }
+    // AccountId20
+    // impl From<sp_core::ecdsa::Public> for AccountId20 {
+    //     fn from(value: sp_core::ecdsa::Public) -> Self {
+    //         let decompressed = libsecp256k1::PublicKey::parse_compressed(&value.0)
+    //             .expect("Wrong compressed public key provided")
+    //             .serialize();
+    //         let mut m = [0u8; 64];
+    //         m.copy_from_slice(&decompressed[1..65]);
+    //         let account = H160::from(H256::from(keccak_256(&m)));
+    //         account.into()
+    //     }
+    //    }
 }
 
 #[cfg(test)]

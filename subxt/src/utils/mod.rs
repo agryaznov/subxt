@@ -15,7 +15,7 @@ mod wrapper_opaque;
 use codec::{Compact, Decode, Encode};
 use derivative::Derivative;
 
-pub use account_id::AccountId32;
+pub use account_id::{AccountId32, AccountId20};
 pub use multi_address::MultiAddress;
 pub use multi_signature::MultiSignature;
 pub use static_type::Static;
