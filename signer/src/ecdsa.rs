@@ -26,6 +26,13 @@ impl AsRef<[u8]> for Signature {
     }
 }
 
+// TODO refactor more elegant
+impl From<Signature> for pmp_account::EthereumSignature {
+    fn from(s: Signature) -> Self {
+        pmp_account::EthereumSignature::from_raw(s.0)
+    }
+}
+
 /// The (compressed) public key for an [`Keypair`] key pair.
 #[derive(Debug, Clone)]
 pub struct PublicKey(pub [u8; 33]);
