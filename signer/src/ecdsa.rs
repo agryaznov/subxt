@@ -164,7 +164,7 @@ impl Keypair {
     /// Sign some message. These bytes can be used directly in a Substrate `MultiSignature::Ecdsa(..)`.
     pub fn sign(&self, message: &[u8]) -> Signature {
         // From sp_core::ecdsa::sign:
-        let message_hash = sp_core_hashing::blake2_256(message);
+        let message_hash = sp_core_hashing::keccak_256(message);
         // From sp_core::ecdsa::sign_prehashed:
         let wrapped = Message::from_slice(&message_hash).expect("Message is 32 bytes; qed");
         let recsig: RecoverableSignature =
