@@ -50,9 +50,8 @@ secrecy = { workspace = true }
 # TODO replace its use with the one above
 libsecp256k1 = { version = "0.7.1", default-features = false }
 
-# polkamask
-# TODO refactor
-pmp-account = { path = "/usr/dev/polka/polkamask/primitives/account" }
+# ethink
+pmp-account = { git = "https://github.com/agryaznov/ethink" }
 
 
 # We only pull this in to enable the JS flag for schnorrkel to use.
