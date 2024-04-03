@@ -154,7 +154,7 @@ impl std::str::FromStr for AccountId32 {
     }
 }
 
-/// 20-byte identifier to use with Polkamask
+/// 20-byte identifier to use with ethink!
 #[derive(
     Clone,
     Eq,

@@ -27,9 +27,9 @@ impl AsRef<[u8]> for Signature {
 }
 
 // TODO refactor more elegant
-impl From<Signature> for ep_account::EthereumSignature {
+impl From<Signature> for ep_crypto::EthereumSignature {
     fn from(s: Signature) -> Self {
-        ep_account::EthereumSignature::from_raw(s.0)
+        ep_crypto::EthereumSignature::from_raw(s.0)
     }
 }
 
