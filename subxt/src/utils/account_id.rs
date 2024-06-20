@@ -155,6 +155,47 @@ impl std::str::FromStr for AccountId32 {
     }
 }
 
+/// 20-byte identifier to use with ethink!
+#[derive(
+    Clone,
+    Eq,
+    PartialEq,
+    Ord,
+    PartialOrd,
+    Encode,
+    Decode,
+    Debug,
+    scale_encode::EncodeAsType,
+    scale_decode::DecodeAsType,
+)]
+pub struct AccountId20(pub [u8; 20]);
+use sp_core_hashing::keccak_256;
+use crate::utils::H160;
+
+impl From<H160> for AccountId20 {
+    fn from(h160: H160) -> Self {
+        Self(h160.0)
+    }
+}
+
+impl AsRef<[u8]> for AccountId20 {
+    fn as_ref(&self) -> &[u8] {
+        &self.0[..]
+    }
+}
+
+impl AsRef<[u8; 20]> for AccountId20 {
+    fn as_ref(&self) -> &[u8; 20] {
+        &self.0
+    }
+}
+
+impl From<[u8; 20]> for AccountId20 {
+    fn from(x: [u8; 20]) -> Self {
+        AccountId20(x)
+    }
+}
+
 // Improve compat with the substrate version if we're using those crates:
 #[cfg(feature = "substrate-compat")]
 mod substrate_impls {

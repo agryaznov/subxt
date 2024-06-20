@@ -51,6 +51,12 @@ schnorrkel = { workspace = true, optional = true }
 secp256k1 = { workspace = true, optional = true, features = ["alloc", "recovery"] }
 secrecy = { workspace = true }
 
+# TODO replace its use with the one above
+libsecp256k1 = { version = "0.7.1", default-features = false }
+
+# ethink
+ep-crypto = { git = "https://github.com/agryaznov/ethink", branch = "master" }
+
 
 # We only pull this in to enable the JS flag for schnorrkel to use.
 getrandom = { workspace = true, optional = true }

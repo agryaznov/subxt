@@ -20,7 +20,7 @@ use codec::{Compact, Decode, Encode};
 use derivative::Derivative;
 use url::Url;
 
-pub use account_id::AccountId32;
+pub use account_id::{AccountId32, AccountId20};
 pub use era::Era;
 pub use multi_address::MultiAddress;
 pub use multi_signature::MultiSignature;
