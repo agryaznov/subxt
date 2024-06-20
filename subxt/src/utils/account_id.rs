@@ -169,7 +169,6 @@ impl std::str::FromStr for AccountId32 {
     scale_decode::DecodeAsType,
 )]
 pub struct AccountId20(pub [u8; 20]);
-use sp_core_hashing::keccak_256;
 use crate::utils::H160;
 
 impl From<H160> for AccountId20 {
