@@ -93,6 +93,8 @@ sp-crypto-hashing = { workspace = true }
 base58 = { workspace = true }
 blake2 = { workspace = true }
 
+libsecp256k1 = { version = "0.7.1", default-features = false }
+
 # Included if the "jsonrpsee" feature is enabled.
 jsonrpsee = { workspace = true, optional = true, features = ["jsonrpsee-types"] }
 

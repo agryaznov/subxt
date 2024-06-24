@@ -8,7 +8,7 @@ use super::{Config, DefaultExtrinsicParams, DefaultExtrinsicParamsBuilder, Hashe
 use codec::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
-pub use crate::utils::{AccountId32, MultiAddress, MultiSignature};
+pub use crate::utils::{AccountId20, AccountId32, MultiAddress, MultiSignature};
 pub use primitive_types::{H256, U256};
 
 /// Default set of commonly used types by Substrate runtimes.
@@ -18,7 +18,7 @@ pub enum SubstrateConfig {}
 
 impl Config for SubstrateConfig {
     type Hash = H256;
-    type AccountId = AccountId32;
+    type AccountId = AccountId20;
     type Address = MultiAddress<Self::AccountId, u32>;
     type Signature = MultiSignature;
     type Hasher = BlakeTwo256;

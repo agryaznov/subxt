@@ -168,7 +168,7 @@ impl Keypair {
     /// Sign some message. These bytes can be used directly in a Substrate `MultiSignature::Ecdsa(..)`.
     pub fn sign(&self, message: &[u8]) -> Signature {
         // From sp_core::ecdsa::sign:
-        let message_hash = sp_crypto_hashing::blake2_256(message);
+        let message_hash = sp_crypto_hashing::keccak_256(message);
         // From sp_core::ecdsa::sign_prehashed:
         let wrapped = Message::from_digest_slice(&message_hash).expect("Message is 32 bytes; qed");
         let recsig: RecoverableSignature =
@@ -281,7 +281,7 @@ mod subxt_compat {
 
     use subxt::config::Config;
     use subxt::tx::Signer as SignerT;
-    use subxt::utils::{AccountId32, MultiAddress, MultiSignature};
+    use subxt::utils::{AccountId20, MultiAddress, MultiSignature};
 
     impl From<Signature> for MultiSignature {
         fn from(value: Signature) -> Self {
@@ -289,30 +289,45 @@ mod subxt_compat {
         }
     }
 
-    impl From<PublicKey> for AccountId32 {
+    impl From<PublicKey> for AccountId20 {
         fn from(value: PublicKey) -> Self {
-            value.to_account_id()
+            value.to_account20_id()
         }
     }
 
-    impl<T> From<PublicKey> for MultiAddress<AccountId32, T> {
+    impl<T> From<PublicKey> for MultiAddress<AccountId20, T> {
         fn from(value: PublicKey) -> Self {
-            value.to_address()
+            value.to_address20()
         }
     }
 
     impl PublicKey {
-        /// A shortcut to obtain an [`AccountId32`] from a [`PublicKey`].
+        /// A shortcut to obtain an [`AccountId20`] from a [`PublicKey`].
         /// We often want this type, and using this method avoids any
         /// ambiguous type resolution issues.
-        pub fn to_account_id(self) -> AccountId32 {
-            AccountId32(sp_crypto_hashing::blake2_256(&self.0))
+        pub fn to_account_id(self) -> AccountId20 {
+            AccountId20::from(self)
         }
         /// A shortcut to obtain a [`MultiAddress`] from a [`PublicKey`].
         /// We often want this type, and using this method avoids any
         /// ambiguous type resolution issues.
-        pub fn to_address<T>(self) -> MultiAddress<AccountId32, T> {
+        pub fn to_address<T>(self) -> MultiAddress<AccountId20, T> {
             MultiAddress::Id(self.to_account_id())
+        }
+        /// Account 20 bytes
+        pub fn to_account20_id(self) -> AccountId20 {
+            let decompressed = libsecp256k1::PublicKey::parse_compressed(&self.0)
+                .expect("Wrong compressed public key provided")
+                .serialize();
+            let mut m = [0u8; 64];
+            m.copy_from_slice(&decompressed[1..65]);
+            let mut b = [0u8; 20];
+            b.copy_from_slice(&sp_crypto_hashing::keccak_256(&m)[12..32]);
+            b.into()
+        }
+        /// doc TODO
+        pub fn to_address20<T>(self) -> MultiAddress<AccountId20, T> {
+            MultiAddress::Id(self.to_account20_id())
         }
     }
 
