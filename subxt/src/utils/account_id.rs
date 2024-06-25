@@ -9,9 +9,6 @@
 use codec::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
-use sp_core::{ecdsa, H256};
-use sp_crypto_hashing::keccak_256;
-
 pub use ep_eth::AccountId20;
 
 /// A 32-byte cryptographic identifier. This is a simplified version of Substrate's
