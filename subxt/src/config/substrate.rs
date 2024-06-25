@@ -18,7 +18,7 @@ pub enum SubstrateConfig {}
 
 impl Config for SubstrateConfig {
     type Hash = H256;
-    type AccountId = AccountId20;
+    type AccountId = AccountId32;
     type Address = MultiAddress<Self::AccountId, u32>;
     type Signature = MultiSignature;
     type Hasher = BlakeTwo256;
