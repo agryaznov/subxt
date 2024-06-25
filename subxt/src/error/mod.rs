@@ -17,8 +17,7 @@ pub use dispatch_error::{
 use subxt_metadata::StorageHasher;
 
 // Re-expose the errors we use from other crates here:
-pub use crate::config::ExtrinsicParamsError;
-pub use crate::metadata::Metadata;
+pub use crate::{config::ExtrinsicParamsError, metadata::Metadata};
 pub use scale_decode::Error as DecodeError;
 pub use scale_encode::Error as EncodeError;
 pub use subxt_metadata::TryFromError as MetadataTryFromError;

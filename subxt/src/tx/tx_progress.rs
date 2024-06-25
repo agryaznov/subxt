@@ -6,12 +6,12 @@
 
 use std::task::Poll;
 
-use crate::utils::strip_compact_prefix;
 use crate::{
     backend::{BlockRef, StreamOfResults, TransactionStatus as BackendTxStatus},
     client::OnlineClientT,
     error::{DispatchError, Error, RpcError, TransactionError},
     events::EventsClient,
+    utils::strip_compact_prefix,
     Config,
 };
 use derivative::Derivative;

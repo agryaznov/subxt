@@ -7,11 +7,12 @@
 //! [`AnyOf`] to configure the set of signed extensions which are known about
 //! when interacting with a chain.
 
-use super::extrinsic_params::{ExtrinsicParams, ExtrinsicParamsEncoder, ExtrinsicParamsError};
-use super::refine_params::RefineParamsData;
-use super::RefineParams;
-use crate::utils::Era;
-use crate::{client::OfflineClientT, Config};
+use super::{
+    extrinsic_params::{ExtrinsicParams, ExtrinsicParamsEncoder, ExtrinsicParamsError},
+    refine_params::RefineParamsData,
+    RefineParams,
+};
+use crate::{client::OfflineClientT, utils::Era, Config};
 use codec::{Compact, Encode};
 use core::fmt::Debug;
 use derivative::Derivative;

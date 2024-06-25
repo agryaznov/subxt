@@ -8,16 +8,21 @@
 pub mod rpc_methods;
 
 use self::rpc_methods::TransactionStatus as RpcTransactionStatus;
-use crate::backend::{
-    rpc::RpcClient, Backend, BlockRef, RuntimeVersion, StorageResponse, StreamOf, StreamOfResults,
-    TransactionStatus,
+use crate::{
+    backend::{
+        rpc::RpcClient, Backend, BlockRef, RuntimeVersion, StorageResponse, StreamOf,
+        StreamOfResults, TransactionStatus,
+    },
+    config::Header,
+    Config, Error,
 };
-use crate::{config::Header, Config, Error};
 use async_trait::async_trait;
 use futures::{future, future::Either, stream, Future, FutureExt, Stream, StreamExt};
-use std::collections::VecDeque;
-use std::pin::Pin;
-use std::task::{Context, Poll};
+use std::{
+    collections::VecDeque,
+    pin::Pin,
+    task::{Context, Poll},
+};
 
 // Expose the RPC methods.
 pub use rpc_methods::LegacyRpcMethods;

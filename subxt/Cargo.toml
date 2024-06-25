@@ -102,6 +102,9 @@ jsonrpsee = { workspace = true, optional = true, features = ["jsonrpsee-types"] 
 sp-core = { workspace = true, optional = true }
 sp-runtime = { workspace = true, optional = true }
 
+# Ethereum primitives
+ep-eth = { path = "../../ethink/primitives/eth" }
+
 # Other subxt crates we depend on.
 subxt-macro = { workspace = true }
 subxt-metadata = { workspace = true, features = ["std"] }

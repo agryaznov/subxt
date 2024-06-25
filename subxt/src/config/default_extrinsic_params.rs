@@ -2,9 +2,9 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use super::signed_extensions::CheckNonceParams;
-use super::{signed_extensions, ExtrinsicParams};
-use super::{Config, Header};
+use super::{
+    signed_extensions, signed_extensions::CheckNonceParams, Config, ExtrinsicParams, Header,
+};
 
 /// The default [`super::ExtrinsicParams`] implementation understands common signed extensions
 /// and how to apply them to a given chain.

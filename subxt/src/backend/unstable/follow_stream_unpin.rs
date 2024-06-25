@@ -2,20 +2,23 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use super::follow_stream::FollowStream;
-use super::UnstableRpcMethods;
-use crate::backend::unstable::rpc_methods::{
-    BestBlockChanged, Finalized, FollowEvent, Initialized, NewBlock,
+use super::{follow_stream::FollowStream, UnstableRpcMethods};
+use crate::{
+    backend::unstable::rpc_methods::{
+        BestBlockChanged, Finalized, FollowEvent, Initialized, NewBlock,
+    },
+    config::{BlockHash, Config},
+    error::Error,
 };
-use crate::config::{BlockHash, Config};
-use crate::error::Error;
 use futures::stream::{FuturesUnordered, Stream, StreamExt};
 
-use std::collections::{HashMap, HashSet};
-use std::future::Future;
-use std::pin::Pin;
-use std::sync::{Arc, Mutex};
-use std::task::{Context, Poll, Waker};
+use std::{
+    collections::{HashMap, HashSet},
+    future::Future,
+    pin::Pin,
+    sync::{Arc, Mutex},
+    task::{Context, Poll, Waker},
+};
 
 /// The type of stream item.
 pub use super::follow_stream::FollowStreamMsg;
@@ -468,8 +471,10 @@ impl<Hash: BlockHash> Drop for BlockRef<Hash> {
 
 #[cfg(test)]
 pub(super) mod test_utils {
-    use super::super::follow_stream::{test_utils::test_stream_getter, FollowStream};
-    use super::*;
+    use super::{
+        super::follow_stream::{test_utils::test_stream_getter, FollowStream},
+        *,
+    };
     use crate::config::substrate::H256;
 
     pub type UnpinRx<Hash> = std::sync::mpsc::Receiver<(Hash, Arc<str>)>;
@@ -552,11 +557,13 @@ pub(super) mod test_utils {
 
 #[cfg(test)]
 mod test {
-    use super::super::follow_stream::test_utils::{
-        ev_best_block, ev_finalized, ev_initialized, ev_new_block,
+    use super::{
+        super::follow_stream::test_utils::{
+            ev_best_block, ev_finalized, ev_initialized, ev_new_block,
+        },
+        test_utils::{assert_from_unpin_rx, ev_new_block_ref, test_unpin_stream_getter},
+        *,
     };
-    use super::test_utils::{assert_from_unpin_rx, ev_new_block_ref, test_unpin_stream_getter};
-    use super::*;
     use crate::config::substrate::H256;
 
     #[tokio::test]

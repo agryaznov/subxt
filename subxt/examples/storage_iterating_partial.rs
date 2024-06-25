@@ -1,10 +1,11 @@
 #![allow(missing_docs)]
-use polkadot::multisig::events::NewMultisig;
-use polkadot::runtime_types::{
-    frame_system::pallet::Call, rococo_runtime::RuntimeCall, sp_weights::weight_v2::Weight,
+use polkadot::{
+    multisig::events::NewMultisig,
+    runtime_types::{
+        frame_system::pallet::Call, rococo_runtime::RuntimeCall, sp_weights::weight_v2::Weight,
+    },
 };
-use subxt::utils::AccountId32;
-use subxt::{OnlineClient, PolkadotConfig};
+use subxt::{utils::AccountId32, OnlineClient, PolkadotConfig};
 use subxt_signer::sr25519::{dev, Keypair};
 
 #[subxt::subxt(runtime_metadata_path = "../artifacts/polkadot_metadata_full.scale")]

@@ -3,12 +3,13 @@
 // see LICENSE for license details.
 
 use super::rpc_methods::{FollowEvent, UnstableRpcMethods};
-use crate::config::Config;
-use crate::error::Error;
+use crate::{config::Config, error::Error};
 use futures::{FutureExt, Stream, StreamExt};
-use std::future::Future;
-use std::pin::Pin;
-use std::task::{Context, Poll};
+use std::{
+    future::Future,
+    pin::Pin,
+    task::{Context, Poll},
+};
 
 /// A `Stream` whose goal is to remain subscribed to `chainHead_follow`. It will re-subscribe if the subscription
 /// is ended for any reason, and it will return the current `subscription_id` as an event, along with the other
@@ -203,12 +204,14 @@ impl<Hash> Stream for FollowStream<Hash> {
 #[cfg(test)]
 pub(super) mod test_utils {
     use super::*;
-    use crate::backend::unstable::rpc_methods::{
-        BestBlockChanged, Finalized, Initialized, NewBlock,
+    use crate::{
+        backend::unstable::rpc_methods::{BestBlockChanged, Finalized, Initialized, NewBlock},
+        config::substrate::H256,
     };
-    use crate::config::substrate::H256;
-    use std::sync::atomic::{AtomicUsize, Ordering};
-    use std::sync::Arc;
+    use std::sync::{
+        atomic::{AtomicUsize, Ordering},
+        Arc,
+    };
 
     /// Given some events, returns a follow stream getter that we can use in
     /// place of the usual RPC method.

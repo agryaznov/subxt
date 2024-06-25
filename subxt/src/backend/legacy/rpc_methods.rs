@@ -4,9 +4,11 @@
 
 //! An interface to call the raw legacy RPC methods.
 
-use crate::backend::rpc::{rpc_params, RpcClient, RpcSubscription};
-use crate::metadata::Metadata;
-use crate::{Config, Error};
+use crate::{
+    backend::rpc::{rpc_params, RpcClient, RpcSubscription},
+    metadata::Metadata,
+    Config, Error,
+};
 use codec::Decode;
 use derivative::Derivative;
 use primitive_types::U256;

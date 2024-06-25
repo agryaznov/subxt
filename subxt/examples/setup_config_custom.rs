@@ -1,8 +1,8 @@
 #![allow(missing_docs)]
 use codec::Encode;
-use subxt::client::OfflineClientT;
-use subxt::config::{
-    Config, ExtrinsicParams, ExtrinsicParamsEncoder, ExtrinsicParamsError, RefineParams,
+use subxt::{
+    client::OfflineClientT,
+    config::{Config, ExtrinsicParams, ExtrinsicParamsEncoder, ExtrinsicParamsError, RefineParams},
 };
 use subxt_signer::sr25519::dev;
 

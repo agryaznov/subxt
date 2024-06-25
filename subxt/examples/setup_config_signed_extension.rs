@@ -2,11 +2,12 @@
 use codec::Encode;
 use scale_encode::EncodeAsType;
 use scale_info::PortableRegistry;
-use subxt::client::OfflineClientT;
-use subxt::config::signed_extensions;
-use subxt::config::{
-    Config, DefaultExtrinsicParamsBuilder, ExtrinsicParams, ExtrinsicParamsEncoder,
-    ExtrinsicParamsError,
+use subxt::{
+    client::OfflineClientT,
+    config::{
+        signed_extensions, Config, DefaultExtrinsicParamsBuilder, ExtrinsicParams,
+        ExtrinsicParamsEncoder, ExtrinsicParamsError,
+    },
 };
 use subxt_signer::sr25519::dev;
 

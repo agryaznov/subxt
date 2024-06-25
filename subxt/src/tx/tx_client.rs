@@ -734,8 +734,9 @@ mod test {
 
     #[test]
     fn transaction_validity_decoding_is_ok() {
-        use sp_runtime::transaction_validity as sp;
-        use sp_runtime::transaction_validity::TransactionValidity as T;
+        use sp_runtime::{
+            transaction_validity as sp, transaction_validity::TransactionValidity as T,
+        };
 
         let pairs = vec![
             (

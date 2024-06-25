@@ -1,8 +1,7 @@
 #![allow(missing_docs)]
-use subxt::ext::codec::Decode;
-use subxt::metadata::Metadata;
-use subxt::utils::H256;
-use subxt::{config::PolkadotConfig, OfflineClient};
+use subxt::{
+    config::PolkadotConfig, ext::codec::Decode, metadata::Metadata, utils::H256, OfflineClient,
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

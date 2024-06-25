@@ -13,14 +13,12 @@ mod static_type;
 mod unchecked_extrinsic;
 mod wrapper_opaque;
 
-use crate::error::RpcError;
-use crate::macros::cfg_jsonrpsee;
-use crate::Error;
+use crate::{error::RpcError, macros::cfg_jsonrpsee, Error};
 use codec::{Compact, Decode, Encode};
 use derivative::Derivative;
 use url::Url;
 
-pub use account_id::{AccountId32, AccountId20};
+pub use account_id::{AccountId20, AccountId32};
 pub use era::Era;
 pub use multi_address::MultiAddress;
 pub use multi_signature::MultiSignature;

@@ -63,10 +63,11 @@ macro_rules! cfg_reconnecting_rpc_client {
 	}
 }
 
-pub(crate) use {
-    cfg_feature, cfg_jsonrpsee, cfg_reconnecting_rpc_client, cfg_substrate_compat,
-    cfg_unstable_light_client,
-};
+pub(crate) use cfg_feature;
+pub(crate) use cfg_jsonrpsee;
+pub(crate) use cfg_reconnecting_rpc_client;
+pub(crate) use cfg_substrate_compat;
+pub(crate) use cfg_unstable_light_client;
 
 // Only used by light-client.
 #[allow(unused)]

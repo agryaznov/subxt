@@ -6,14 +6,18 @@
 //! <https://github.com/paritytech/json-rpc-interface-spec/> for details of the API
 //! methods exposed here.
 
-use crate::backend::rpc::{rpc_params, RpcClient, RpcSubscription};
-use crate::config::BlockHash;
-use crate::{Config, Error};
+use crate::{
+    backend::rpc::{rpc_params, RpcClient, RpcSubscription},
+    config::BlockHash,
+    Config, Error,
+};
 use derivative::Derivative;
 use futures::{Stream, StreamExt};
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, VecDeque};
-use std::task::Poll;
+use std::{
+    collections::{HashMap, VecDeque},
+    task::Poll,
+};
 
 /// An interface to call the unstable RPC methods. This interface is instantiated with
 /// some `T: Config` trait which determines some of the types that the RPC methods will
@@ -794,10 +798,12 @@ pub(crate) mod unsigned_number_as_string {
 /// Adapted from <https://tikv.github.io/doc/serde_with/rust/hashmap_as_tuple_list>
 pub(crate) mod hashmap_as_tuple_list {
     use serde::de::{Deserialize, Deserializer, SeqAccess, Visitor};
-    use std::collections::HashMap;
-    use std::fmt;
-    use std::hash::{BuildHasher, Hash};
-    use std::marker::PhantomData;
+    use std::{
+        collections::HashMap,
+        fmt,
+        hash::{BuildHasher, Hash},
+        marker::PhantomData,
+    };
 
     /// Deserialize a [`HashMap`] from a list of tuples or object
     pub fn deserialize<'de, K, V, BH, D>(deserializer: D) -> Result<HashMap<K, V, BH>, D::Error>

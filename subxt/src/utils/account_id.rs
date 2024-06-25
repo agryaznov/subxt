@@ -9,8 +9,10 @@
 use codec::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
-use sp_core::{H256, ecdsa};
+use sp_core::{ecdsa, H256};
 use sp_crypto_hashing::keccak_256;
+
+pub use ep_eth::AccountId20;
 
 /// A 32-byte cryptographic identifier. This is a simplified version of Substrate's
 /// `sp_core::crypto::AccountId32`. To obtain more functionality, convert this into
@@ -155,155 +157,6 @@ impl std::str::FromStr for AccountId32 {
     type Err = FromSs58Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         AccountId32::from_ss58check(s)
-    }
-}
-
-/// 20-byte identifier to use with ethink!
-#[derive(
-    Clone,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Encode,
-    Decode,
-    Debug,
-    scale_encode::EncodeAsType,
-    scale_decode::DecodeAsType,
-    scale_info::TypeInfo,
-    codec::MaxEncodedLen,
-)]
-pub struct AccountId20(pub [u8; 20]);
-use crate::utils::H160;
-
-
-impl AccountId20 {
-    /// Return the ss58-check string for this key. Adapted from `sp_core::crypto`. We need
-    /// this to serialize our account appropriately but otherwise don't care.
-    pub fn to_ss58check(&self) -> String {
-        /// For serializing to a string to obtain the account nonce, we use the default
-        /// substrate prefix (since we have no way to otherwise pick one). It
-        /// doesn't really matter, since when it's deserialized back in
-        /// system_accountNextIndex, we ignore this (so long as it's valid).
-        const SUBSTRATE_SS58_PREFIX: u8 = 42;
-        // prefix <= 63 just take up one byte at the start:
-        let mut v = vec![SUBSTRATE_SS58_PREFIX];
-        // then push the account ID bytes.
-        v.extend(self.0);
-        // then push a 2 byte checksum of what we have so far.
-        let r = ss58hash(&v);
-        v.extend(&r[0..2]);
-        // then encode to base58.
-        use base58::ToBase58;
-        v.to_base58()
-    }
-
-    /// This isn't strictly needed, but to give our AccountId20 a little more usefulness,
-    /// we also implement the logic needed to decode an AccountId20 from an S058
-    /// encoded string. This is exposed via a `FromStr` impl.
-    fn from_ss58check(s: &str) -> Result<Self, FromSs58Error> {
-        const CHECKSUM_LEN: usize = 2;
-        let body_len = 20;
-
-        use base58::FromBase58;
-        let data = s.from_base58().map_err(|_| FromSs58Error::BadBase58)?;
-        if data.len() < 2 {
-            return Err(FromSs58Error::BadLength)
-        }
-        let prefix_len = match data[0] {
-            0..=63 => 1,
-            64..=127 => 2,
-            _ => return Err(FromSs58Error::InvalidPrefix),
-        };
-        if data.len() != prefix_len + body_len + CHECKSUM_LEN {
-            return Err(FromSs58Error::BadLength)
-        }
-        let hash = ss58hash(&data[0..body_len + prefix_len]);
-        let checksum = &hash[0..CHECKSUM_LEN];
-        if data[body_len + prefix_len..body_len + prefix_len + CHECKSUM_LEN] != *checksum
-        {
-            // Invalid checksum.
-            return Err(FromSs58Error::InvalidChecksum)
-        }
-
-        let result = data[prefix_len..body_len + prefix_len]
-            .try_into()
-            .map_err(|_| FromSs58Error::BadLength)?;
-        Ok(AccountId20(result))
-    }
-}
-
-impl From<H160> for AccountId20 {
-    fn from(h160: H160) -> Self {
-        Self(h160.0)
-    }
-}
-
-impl AsRef<[u8]> for AccountId20 {
-    fn as_ref(&self) -> &[u8] {
-        &self.0[..]
-    }
-}
-
-impl AsRef<[u8; 20]> for AccountId20 {
-    fn as_ref(&self) -> &[u8; 20] {
-        &self.0
-    }
-}
-
-impl AsMut<[u8]> for AccountId20 {
-    fn as_mut(&mut self) -> &mut [u8] {
-        &mut self.0[..]
-    }
-}
-
-impl From<[u8; 20]> for AccountId20 {
-    fn from(x: [u8; 20]) -> Self {
-        AccountId20(x)
-    }
-}
-
-impl From<ecdsa::Public> for AccountId20 {
-    fn from(pk: ecdsa::Public) -> Self {
-        let decompressed = libsecp256k1::PublicKey::parse_compressed(&pk.0)
-            .expect("Wrong compressed public key provided")
-            .serialize();
-        let mut m = [0u8; 64];
-        m.copy_from_slice(&decompressed[1..65]);
-        let account = H160::from(H256::from(keccak_256(&m)));
-        Self(account.into())
-    }
-}
-
-impl Serialize for AccountId20 {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        serializer.serialize_str(&self.to_ss58check())
-    }
-}
-
-impl<'de> Deserialize<'de> for AccountId20 {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        AccountId20::from_ss58check(&String::deserialize(deserializer)?)
-            .map_err(|e| serde::de::Error::custom(format!("{e:?}")))
-    }
-}
-
-impl std::fmt::Display for AccountId20 {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", self.to_ss58check())
-    }
-}
-
-impl std::str::FromStr for AccountId20 {
-    type Err = FromSs58Error;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        AccountId20::from_ss58check(s)
     }
 }
 

@@ -1558,7 +1558,6 @@ checksum = "e48c92028aaa870e83d51c64e5d4e0b6981b360c522198c23959f219a4e1b15b"
 [[package]]
 name = "ep-eth"
 version = "0.2.0"
-source = "git+https://github.com/agryaznov/ethink?rev=193f8b4#193f8b4bd684f9ef4253dfdff259a2f622172e78"
 dependencies = [
  "ep-mapping",
  "ethereum",
@@ -1580,7 +1579,6 @@ dependencies = [
 [[package]]
 name = "ep-mapping"
 version = "0.2.0"
-source = "git+https://github.com/agryaznov/ethink?rev=193f8b4#193f8b4bd684f9ef4253dfdff259a2f622172e78"
 dependencies = [
  "sp-core",
  "sp-weights",
@@ -3643,16 +3641,6 @@ dependencies = [
 
 [[package]]
 name = "scale-bits"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "036575c29af9b6e4866ffb7fa055dbf623fe7a9cc159b33786de6013a6969d89"
-dependencies = [
- "parity-scale-codec",
- "scale-info",
-]
-
-[[package]]
-name = "scale-bits"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "662d10dcd57b1c2a3c41c9cf68f71fb09747ada1ea932ad961aca7e2ca28315f"
@@ -3672,7 +3660,7 @@ dependencies = [
  "derive_more",
  "parity-scale-codec",
  "primitive-types",
- "scale-bits 0.5.0",
+ "scale-bits",
  "scale-decode-derive",
  "scale-type-resolver",
  "smallvec",
@@ -3692,37 +3680,24 @@ dependencies = [
 
 [[package]]
 name = "scale-encode"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6d70cb4b29360105483fac1ed567ff95d65224a14dd275b6303ed0a654c78de5"
-dependencies = [
- "derive_more",
- "parity-scale-codec",
- "primitive-types",
- "scale-bits 0.4.0",
- "scale-encode-derive",
- "scale-info",
- "smallvec",
-]
-
-[[package]]
-name = "scale-encode"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "628800925a33794fb5387781b883b5e14d130fece9af5a63613867b8de07c5c7"
 dependencies = [
  "derive_more",
  "parity-scale-codec",
- "scale-bits 0.5.0",
+ "primitive-types",
+ "scale-bits",
+ "scale-encode-derive",
  "scale-type-resolver",
  "smallvec",
 ]
 
 [[package]]
 name = "scale-encode-derive"
-version = "0.5.0"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "995491f110efdc6bea96d6a746140e32bfceb4ea47510750a5467295a4707a25"
+checksum = "7a304e1af7cdfbe7a24e08b012721456cc8cecdedadc14b3d10513eada63233c"
 dependencies = [
  "darling 0.14.4",
  "proc-macro-crate 1.3.1",
@@ -3810,9 +3785,9 @@ dependencies = [
  "either",
  "frame-metadata 15.1.0",
  "parity-scale-codec",
- "scale-bits 0.5.0",
+ "scale-bits",
  "scale-decode",
- "scale-encode 0.6.0",
+ "scale-encode",
  "scale-info",
  "scale-type-resolver",
  "serde",
@@ -4816,12 +4791,13 @@ dependencies = [
  "impl-serde",
  "instant",
  "jsonrpsee",
+ "libsecp256k1",
  "parity-scale-codec",
  "primitive-types",
  "reconnecting-jsonrpsee-ws-client",
- "scale-bits 0.5.0",
+ "scale-bits",
  "scale-decode",
- "scale-encode 0.5.0",
+ "scale-encode",
  "scale-info",
  "scale-value",
  "serde",

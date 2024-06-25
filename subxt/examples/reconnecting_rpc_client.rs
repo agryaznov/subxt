@@ -8,10 +8,14 @@
 
 use std::time::Duration;
 
-use subxt::backend::rpc::reconnecting_rpc_client::{Client, ExponentialBackoff, PingConfig};
-use subxt::backend::rpc::RpcClient;
-use subxt::error::{Error, RpcError};
-use subxt::{OnlineClient, PolkadotConfig};
+use subxt::{
+    backend::rpc::{
+        reconnecting_rpc_client::{Client, ExponentialBackoff, PingConfig},
+        RpcClient,
+    },
+    error::{Error, RpcError},
+    OnlineClient, PolkadotConfig,
+};
 
 // Generate an interface that we can use from the node's metadata.
 #[subxt::subxt(runtime_metadata_path = "../artifacts/polkadot_metadata_small.scale")]

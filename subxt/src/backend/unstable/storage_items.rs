@@ -2,19 +2,23 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use super::follow_stream_driver::FollowStreamDriverHandle;
-use super::follow_stream_unpin::BlockRef;
-use super::rpc_methods::{
-    FollowEvent, MethodResponse, StorageQuery, StorageResult, UnstableRpcMethods,
+use super::{
+    follow_stream_driver::FollowStreamDriverHandle,
+    follow_stream_unpin::BlockRef,
+    rpc_methods::{FollowEvent, MethodResponse, StorageQuery, StorageResult, UnstableRpcMethods},
 };
-use crate::config::Config;
-use crate::error::{Error, RpcError};
+use crate::{
+    config::Config,
+    error::{Error, RpcError},
+};
 use futures::{FutureExt, Stream, StreamExt};
-use std::collections::VecDeque;
-use std::future::Future;
-use std::pin::Pin;
-use std::sync::Arc;
-use std::task::{Context, Poll};
+use std::{
+    collections::VecDeque,
+    future::Future,
+    pin::Pin,
+    sync::Arc,
+    task::{Context, Poll},
+};
 
 /// Obtain a stream of storage items given some query. this handles continuing
 /// and stopping under the hood, and returns a stream of `StorageResult`s.

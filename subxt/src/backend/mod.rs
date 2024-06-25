@@ -10,14 +10,11 @@ pub mod legacy;
 pub mod rpc;
 pub mod unstable;
 
-use crate::error::Error;
-use crate::metadata::Metadata;
-use crate::Config;
+use crate::{error::Error, metadata::Metadata, Config};
 use async_trait::async_trait;
 use codec::{Decode, Encode};
 use futures::{Stream, StreamExt};
-use std::pin::Pin;
-use std::sync::Arc;
+use std::{pin::Pin, sync::Arc};
 
 /// Prevent the backend trait being implemented externally.
 #[doc(hidden)]

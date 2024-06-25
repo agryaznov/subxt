@@ -1,8 +1,10 @@
-use crate::client::OfflineClientT;
-use crate::custom_values::custom_value_address::{CustomValueAddress, Yes};
-use crate::error::MetadataError;
-use crate::metadata::DecodeWithMetadata;
-use crate::{Config, Error};
+use crate::{
+    client::OfflineClientT,
+    custom_values::custom_value_address::{CustomValueAddress, Yes},
+    error::MetadataError,
+    metadata::DecodeWithMetadata,
+    Config, Error,
+};
 use derivative::Derivative;
 
 /// A client for accessing custom values stored in the metadata.
@@ -93,13 +95,13 @@ impl<T: Config, Client: OfflineClientT<T>> CustomValuesClient<T, Client> {
 
 #[cfg(test)]
 mod tests {
-    use crate::backend::RuntimeVersion;
-    use crate::custom_values::CustomValuesClient;
-    use crate::{Metadata, OfflineClient, SubstrateConfig};
+    use crate::{
+        backend::RuntimeVersion, custom_values::CustomValuesClient, Metadata, OfflineClient,
+        SubstrateConfig,
+    };
     use codec::Encode;
     use scale_decode::DecodeAsType;
-    use scale_info::form::PortableForm;
-    use scale_info::TypeInfo;
+    use scale_info::{form::PortableForm, TypeInfo};
     use std::collections::BTreeMap;
 
     #[derive(Debug, Clone, PartialEq, Eq, Encode, TypeInfo, DecodeAsType)]
