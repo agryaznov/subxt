@@ -103,7 +103,7 @@ sp-core = { workspace = true, optional = true }
 sp-runtime = { workspace = true, optional = true }
 
 # Ethereum primitives
-ep-eth = { path = "../../ethink/primitives/eth" }
+ep-eth = { git = "https://github.com/agryaznov/ethink.git", branch = "develop" }
 
 # Other subxt crates we depend on.
 subxt-macro = { workspace = true }
