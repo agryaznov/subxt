@@ -2,9 +2,11 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use super::storage_address::{StorageAddress, Yes};
-use super::storage_key::StorageHashers;
-use super::StorageKey;
+use super::{
+    storage_address::{StorageAddress, Yes},
+    storage_key::StorageHashers,
+    StorageKey,
+};
 
 use crate::{
     backend::{BackendExt, BlockRef},

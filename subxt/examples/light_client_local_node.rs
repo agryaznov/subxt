@@ -1,8 +1,8 @@
 #![allow(missing_docs)]
-use subxt::utils::fetch_chainspec_from_rpc_node;
 use subxt::{
     client::OnlineClient,
     lightclient::{ChainConfig, LightClient},
+    utils::fetch_chainspec_from_rpc_node,
     PolkadotConfig,
 };
 use subxt_signer::sr25519::dev;

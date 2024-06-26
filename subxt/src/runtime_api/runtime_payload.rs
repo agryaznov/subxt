@@ -8,9 +8,9 @@ use scale_encode::EncodeAsFields;
 use scale_value::Composite;
 use std::borrow::Cow;
 
-use crate::dynamic::DecodedValueThunk;
-use crate::error::MetadataError;
-use crate::{metadata::DecodeWithMetadata, Error, Metadata};
+use crate::{
+    dynamic::DecodedValueThunk, error::MetadataError, metadata::DecodeWithMetadata, Error, Metadata,
+};
 
 /// This represents a runtime API payload that can call into the runtime of node.
 ///

@@ -21,19 +21,19 @@ pub mod rpc_methods;
 use self::rpc_methods::{
     FollowEvent, MethodResponse, RuntimeEvent, StorageQuery, StorageQueryType, StorageResultType,
 };
-use crate::backend::{
-    rpc::RpcClient, Backend, BlockRef, BlockRefT, RuntimeVersion, StorageResponse, StreamOf,
-    StreamOfResults, TransactionStatus,
+use crate::{
+    backend::{
+        rpc::RpcClient, Backend, BlockRef, BlockRefT, RuntimeVersion, StorageResponse, StreamOf,
+        StreamOfResults, TransactionStatus,
+    },
+    config::BlockHash,
+    error::{Error, RpcError},
+    Config,
 };
-use crate::config::BlockHash;
-use crate::error::{Error, RpcError};
-use crate::Config;
 use async_trait::async_trait;
 use follow_stream_driver::{FollowStreamDriver, FollowStreamDriverHandle};
 use futures::{Stream, StreamExt};
-use std::collections::HashMap;
-use std::sync::Arc;
-use std::task::Poll;
+use std::{collections::HashMap, sync::Arc, task::Poll};
 use storage_items::StorageItems;
 
 // Expose the RPC methods.

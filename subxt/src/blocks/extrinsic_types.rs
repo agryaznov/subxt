@@ -12,12 +12,14 @@ use crate::{
     Metadata,
 };
 
-use crate::config::signed_extensions::{
-    ChargeAssetTxPayment, ChargeTransactionPayment, CheckNonce,
+use crate::{
+    config::{
+        signed_extensions::{ChargeAssetTxPayment, ChargeTransactionPayment, CheckNonce},
+        SignedExtension,
+    },
+    dynamic::DecodedValue,
+    utils::strip_compact_prefix,
 };
-use crate::config::SignedExtension;
-use crate::dynamic::DecodedValue;
-use crate::utils::strip_compact_prefix;
 use codec::Decode;
 use derivative::Derivative;
 use scale_decode::{DecodeAsFields, DecodeAsType};
@@ -773,9 +775,11 @@ mod tests {
     use crate::{backend::RuntimeVersion, OfflineClient, PolkadotConfig};
     use assert_matches::assert_matches;
     use codec::{Decode, Encode};
-    use frame_metadata::v15::{CustomMetadata, OuterEnums};
     use frame_metadata::{
-        v15::{ExtrinsicMetadata, PalletCallMetadata, PalletMetadata, RuntimeMetadataV15},
+        v15::{
+            CustomMetadata, ExtrinsicMetadata, OuterEnums, PalletCallMetadata, PalletMetadata,
+            RuntimeMetadataV15,
+        },
         RuntimeMetadataPrefixed,
     };
     use primitive_types::H256;

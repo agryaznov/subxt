@@ -2,11 +2,10 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use crate::custom_values::CustomValuesClient;
 use crate::{
     backend::RuntimeVersion, blocks::BlocksClient, constants::ConstantsClient,
-    events::EventsClient, runtime_api::RuntimeApiClient, storage::StorageClient, tx::TxClient,
-    Config, Metadata,
+    custom_values::CustomValuesClient, events::EventsClient, runtime_api::RuntimeApiClient,
+    storage::StorageClient, tx::TxClient, Config, Metadata,
 };
 use derivative::Derivative;
 

@@ -9,6 +9,8 @@
 use codec::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
+pub use ep_eth::AccountId20;
+
 /// A 32-byte cryptographic identifier. This is a simplified version of Substrate's
 /// `sp_core::crypto::AccountId32`. To obtain more functionality, convert this into
 /// that type.
@@ -152,46 +154,6 @@ impl std::str::FromStr for AccountId32 {
     type Err = FromSs58Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         AccountId32::from_ss58check(s)
-    }
-}
-
-/// 20-byte identifier to use with ethink!
-#[derive(
-    Clone,
-    Eq,
-    PartialEq,
-    Ord,
-    PartialOrd,
-    Encode,
-    Decode,
-    Debug,
-    scale_encode::EncodeAsType,
-    scale_decode::DecodeAsType,
-)]
-pub struct AccountId20(pub [u8; 20]);
-use crate::utils::H160;
-
-impl From<H160> for AccountId20 {
-    fn from(h160: H160) -> Self {
-        Self(h160.0)
-    }
-}
-
-impl AsRef<[u8]> for AccountId20 {
-    fn as_ref(&self) -> &[u8] {
-        &self.0[..]
-    }
-}
-
-impl AsRef<[u8; 20]> for AccountId20 {
-    fn as_ref(&self) -> &[u8; 20] {
-        &self.0
-    }
-}
-
-impl From<[u8; 20]> for AccountId20 {
-    fn from(x: [u8; 20]) -> Self {
-        AccountId20(x)
     }
 }
 

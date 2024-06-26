@@ -1,7 +1,9 @@
 #![allow(missing_docs)]
-use subxt::backend::{legacy::LegacyRpcMethods, rpc::RpcClient};
-use subxt::config::DefaultExtrinsicParamsBuilder as Params;
-use subxt::{OnlineClient, PolkadotConfig};
+use subxt::{
+    backend::{legacy::LegacyRpcMethods, rpc::RpcClient},
+    config::DefaultExtrinsicParamsBuilder as Params,
+    OnlineClient, PolkadotConfig,
+};
 use subxt_signer::sr25519::dev;
 
 #[subxt::subxt(runtime_metadata_path = "../artifacts/polkadot_metadata_small.scale")]

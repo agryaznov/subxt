@@ -3,15 +3,19 @@
 // see LICENSE for license details.
 
 use super::follow_stream_unpin::{BlockRef, FollowStreamMsg, FollowStreamUnpin};
-use crate::backend::unstable::rpc_methods::{FollowEvent, Initialized, RuntimeEvent};
-use crate::config::BlockHash;
-use crate::error::Error;
+use crate::{
+    backend::unstable::rpc_methods::{FollowEvent, Initialized, RuntimeEvent},
+    config::BlockHash,
+    error::Error,
+};
 use futures::stream::{Stream, StreamExt};
-use std::collections::{HashMap, HashSet, VecDeque};
-use std::ops::DerefMut;
-use std::pin::Pin;
-use std::sync::{Arc, Mutex};
-use std::task::{Context, Poll, Waker};
+use std::{
+    collections::{HashMap, HashSet, VecDeque},
+    ops::DerefMut,
+    pin::Pin,
+    sync::{Arc, Mutex},
+    task::{Context, Poll, Waker},
+};
 
 /// A `Stream` which builds on `FollowStreamDriver`, and allows multiple subscribers to obtain events
 /// from the single underlying subscription (each being provided an `Initialized` message and all new
@@ -381,8 +385,7 @@ struct SubscriberDetails<Hash: BlockHash> {
 
 #[cfg(test)]
 mod test_utils {
-    use super::super::follow_stream_unpin::test_utils::test_unpin_stream_getter;
-    use super::*;
+    use super::{super::follow_stream_unpin::test_utils::test_unpin_stream_getter, *};
 
     /// Return a `FollowStreamDriver`
     pub fn test_follow_stream_driver_getter<Hash, F, I>(
@@ -401,14 +404,18 @@ mod test_utils {
 
 #[cfg(test)]
 mod test {
-    use super::super::follow_stream::test_utils::{
-        ev_best_block, ev_finalized, ev_initialized, ev_new_block,
+    use super::{
+        super::{
+            follow_stream::test_utils::{
+                ev_best_block, ev_finalized, ev_initialized, ev_new_block,
+            },
+            follow_stream_unpin::test_utils::{
+                ev_best_block_ref, ev_finalized_ref, ev_initialized_ref, ev_new_block_ref,
+            },
+        },
+        test_utils::test_follow_stream_driver_getter,
+        *,
     };
-    use super::super::follow_stream_unpin::test_utils::{
-        ev_best_block_ref, ev_finalized_ref, ev_initialized_ref, ev_new_block_ref,
-    };
-    use super::test_utils::test_follow_stream_driver_getter;
-    use super::*;
 
     #[test]
     fn follow_stream_driver_is_sendable() {

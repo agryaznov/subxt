@@ -93,12 +93,17 @@ sp-crypto-hashing = { workspace = true }
 base58 = { workspace = true }
 blake2 = { workspace = true }
 
+libsecp256k1 = { version = "0.7.1", default-features = false }
+
 # Included if the "jsonrpsee" feature is enabled.
 jsonrpsee = { workspace = true, optional = true, features = ["jsonrpsee-types"] }
 
 # Included if the "substrate-compat" feature is enabled.
 sp-core = { workspace = true, optional = true }
 sp-runtime = { workspace = true, optional = true }
+
+# Ethereum primitives
+ep-eth = { git = "https://github.com/agryaznov/ethink.git", tag = "v0.3.0" }
 
 # Other subxt crates we depend on.
 subxt-macro = { workspace = true }

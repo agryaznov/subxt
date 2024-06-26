@@ -2,8 +2,13 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-use crate::backend::{Backend, BackendExt, BlockRef};
-use crate::{client::OnlineClientT, error::Error, events::Events, Config};
+use crate::{
+    backend::{Backend, BackendExt, BlockRef},
+    client::OnlineClientT,
+    error::Error,
+    events::Events,
+    Config,
+};
 use derivative::Derivative;
 use std::future::Future;
 

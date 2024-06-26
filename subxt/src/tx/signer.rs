@@ -5,8 +5,7 @@
 //! A library to **sub**mit e**xt**rinsics to a
 //! [substrate](https://github.com/paritytech/substrate) node via RPC.
 
-use crate::macros::cfg_substrate_compat;
-use crate::Config;
+use crate::{macros::cfg_substrate_compat, Config};
 
 /// Signing transactions requires a [`Signer`]. This is responsible for
 /// providing the "from" account that the transaction is being signed by,
