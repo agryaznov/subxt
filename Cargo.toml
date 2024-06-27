@@ -135,12 +135,12 @@ sp-runtime = { git = "https://github.com/paritytech/polkadot-sdk", branch = "rel
 sp-keyring = { git = "https://github.com/paritytech/polkadot-sdk", branch = "release-polkadot-v1.12.0", default-features = false}
 
 # Subxt workspace crates:
-subxt = { version = "0.35.3+ethink", path = "subxt", default-features = false }
-subxt-macro = { version = "0.35.3+ethink", path = "macro" }
-subxt-metadata = { version = "0.35.3+ethink", path = "metadata", default-features = false }
-subxt-codegen = { version = "0.35.3+ethink", path = "codegen" }
-subxt-signer = { version = "0.35.3+ethink", path = "signer", default-features = false }
-subxt-lightclient = { version = "0.35.3+ethink", path = "lightclient", default-features = false }
+subxt = { version = "0.35.3-ethink.1", path = "subxt", default-features = false }
+subxt-macro = { version = "0.35.3-ethink.1", path = "macro" }
+subxt-metadata = { version = "0.35.3-ethink.1", path = "metadata", default-features = false }
+subxt-codegen = { version = "0.35.3-ethink.1", path = "codegen" }
+subxt-signer = { version = "0.35.3-ethink.1", path = "signer", default-features = false }
+subxt-lightclient = { version = "0.35.3-ethink.1", path = "lightclient", default-features = false }
 test-runtime = { path = "testing/test-runtime" }
 substrate-runner = { path = "testing/substrate-runner" }
 
