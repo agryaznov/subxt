@@ -54,8 +54,9 @@ secrecy = { workspace = true }
 # TODO replace its use with the one above
 libsecp256k1 = { version = "0.7.1", default-features = false }
 
-# ethink
-ep-eth = { git = "https://github.com/agryaznov/ethink.git", tag = "v0.3.0" }
+# eth primitives
+#ep-eth = { git = "https://github.com/agryaznov/ethink.git", tag = "v0.3.0" }
+ep-eth = { path = "../../ethink/primitives/eth/" }
 
 
 # We only pull this in to enable the JS flag for schnorrkel to use.
